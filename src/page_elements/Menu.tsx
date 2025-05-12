@@ -1,0 +1,31 @@
+import "../App.css";
+import { Button } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo_zarya.png';
+import { routeMap } from "../routeMap";
+
+interface IProps {}
+
+const Menu: React.FC<IProps> = () => {
+  return(
+    <header className="menu">
+      <a href="/" className="logo">
+        <img src={logo} alt="LogoZarya" />
+      </a>
+
+      <nav className="nav_menu">
+        <Link to={routeMap.home.path}>Главная</Link>
+        <Link to={routeMap.products.path}>Продукты</Link>
+        <Link to={routeMap.cart.path}>Корзина</Link>
+        <Link to={routeMap.subscribe.path}>Подписки</Link>
+      </nav>
+
+      <div className="auth-buttons">
+        <Button colorPalette="orange" size="md" variant="outline"><Link to={routeMap.login.path}>Войти</Link></Button>
+        <Button colorPalette="orange" size="md" variant="solid"><Link to={routeMap.register.path}>Зарегистрироваться</Link></Button>
+      </div>
+    </header>
+  );
+};
+
+export default Menu;
