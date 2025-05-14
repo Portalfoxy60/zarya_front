@@ -40,15 +40,15 @@ const Login: React.FC = () => {
       <main className="login-container">
         <form className="login-box" onSubmit={handleSubmit}>
           <h2 className="form-legend">Войти в аккаунт</h2>
-          <div className="login-field">
+          <div>
             <label className="form-control">Почта</label>
             <Input id="email" name="email" placeholder="Почта" value={formData.email} onChange={handleChange} />
           </div>
-          <div className="login-field">
+          <div>
             <label className="form-control">Пароль</label>
             <Input id="password" name="password" placeholder="Пароль" type="password" value={formData.password} onChange={handleChange} />
           </div>
-          <Button colorPalette="orange" width="100%" type="submit">Войти</Button>
+          <Button type="submit" colorPalette="orange" size="sm" fontWeight="bold" fontSize="12px" width="full">Войти</Button>
           <Text className="login-link">
             Нет аккаунта? Зарегистрируйтесь!
           </Text>

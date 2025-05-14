@@ -40,7 +40,7 @@ const Register: React.FC = () => {
               </div>
             </div>
           </div>
-          <Button colorPalette="orange" className="register-button">
+          <Button type="submit" colorPalette="orange" size="sm" fontWeight="bold" fontSize="12px" width="full">
             Зарегистрироваться
           </Button>
         </form>

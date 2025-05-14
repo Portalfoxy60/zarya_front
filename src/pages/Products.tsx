@@ -59,6 +59,7 @@ const Products: React.FC = () => {
         </section>
       </main>
       <Footer />
+      
     </>
   );
 };

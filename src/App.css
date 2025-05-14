@@ -17,18 +17,6 @@
   font-size: 16px;
   line-height: 100%;
 }
-.form-legend {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: normal;
-}
-.form-control {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: normal;
-}
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -215,11 +203,7 @@ main {
   padding: 24px;
   font-family: 'Inter', sans-serif;
 }
-.login-field {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+
 .login-link {
   text-align: center;
   color: #3182ce;
@@ -233,6 +217,7 @@ main {
   align-items: center;
   padding: 40px 0;
   min-height: 80vh;
+  gap: 20px;
 }
 .register-box {
   display: flex;
@@ -256,24 +241,13 @@ main {
   gap: 4px;
   width: 256px;
 }
-.register-button {
-  margin-top: 20px;
-  width: 260px;
-}
+
 .cart-container {
   padding: 60px 80px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   align-items: center;
-}
-
-.page-title {
-  color: #DD6B20;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 36px;
-  line-height: 28px;
 }
 .cart-container {
   padding: 60px 80px;
@@ -366,7 +340,114 @@ main {
   margin-top: 16px;
 }
 
-.subscribe-card button {
-  width: 143px;
-  align-self: center;
+.account-settings {
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 768px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-legend {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: normal;
+  color: #333;
+}
+
+.form-control {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+}
+.form-row {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.form-row > div {
+  flex: 1;
+}
+
+select.chakra-input:focus {
+  border-color: #DD6B20;
+  box-shadow: 0 0 0 1px #DD6B20;
+}
+.single-column-form {
+  flex-direction: column;
+  gap: 16px;
+}
+
+.single-column-form .form-group {
+  width: 100%;
+}
+.single-column-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+.title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+.subscribe-layout {
+  display: flex;
+  margin-top: 40px;
+}
+.subscribe-card_data {
+  background-color: #FFEFC5;
+  margin-right: 300px;
+  border-radius: 8px;
+  width: 320px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+}
+.product-list-item {
+  background-color: #FFEFC5;
+  padding: 8px 12px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  border-radius: 6px;
+  gap: 12px;
+}
+.subscribe-layout{
+  width: 1380px;
+  margin: 0 auto;
 }

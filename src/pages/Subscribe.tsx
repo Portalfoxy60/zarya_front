@@ -19,7 +19,7 @@ const Subscribe: React.FC = () => {
               Минимум забот, максимум вкуса.
             </p>
             <p className="subscribe-price">Цена: 30€</p>
-            <Button colorPalette="orange">Оформить</Button>
+            <Button  width="143px" margin="0 auto"colorPalette="orange" >Оформить</Button>
           </div>
 
           <div className="subscribe-card">
@@ -29,7 +29,7 @@ const Subscribe: React.FC = () => {
               В течение месяца вы будете получать свежие, сбалансированные и аппетитные завтраки прямо к вашей двери — с понедельника по пятницу.
             </p>
             <p className="subscribe-price">Цена: 60€</p>
-            <Button colorPalette="orange">Оформить</Button>
+            <Button width="143px" margin="0 auto" colorPalette="orange">Оформить</Button>
           </div>
 
           <div className="subscribe-card">
@@ -40,7 +40,7 @@ const Subscribe: React.FC = () => {
               Мы привозим, ты — наслаждаешься.
             </p>
             <p className="subscribe-price">Цена: 40€</p>
-            <Button colorPalette="orange">Оформить</Button>
+            <Button width="143px" margin="0 auto" colorPalette="orange">Оформить</Button>
           </div>
 
           <div className="subscribe-card">
@@ -52,7 +52,7 @@ const Subscribe: React.FC = () => {
               Чики-пуки, как говорится.
             </p>
             <p className="subscribe-price">Цена: 100€</p>
-            <Button colorPalette="orange">Оформить</Button>
+            <Button width="143px" margin="0 auto" colorPalette="orange">Оформить</Button>
           </div>
         </div>
       </main>
