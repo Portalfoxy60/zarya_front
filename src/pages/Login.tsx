@@ -4,6 +4,7 @@ import Footer from "../page_elements/Footer";
 import "../App.css";
 import api from "../api"
 import { useState } from "react";
+import { useAuth } from "../auth/UseAuth";
 
 interface LoginRequest {
   email: string;
@@ -14,10 +15,17 @@ interface LoginResponse {
 }
 
 const Login: React.FC = () => {
-  const login = async (data: LoginRequest): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>('/auth/login', data);
-    return response.data;
-  };
+const { user, login, logout } = useAuth();
+const loginRequest = async (data: LoginRequest) => {
+  try{
+    await api.post<LoginResponse>('/auth/login', data);
+    const response = await api.get('/auth/me')
+    login(response.data)
+  } catch(error) {
+    console.error('Ошибка логина', error)
+    logout();
+  }
+};
   const [formData, setFormData] = useState<LoginRequest>({ email: '', password: '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +35,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log(formData)
-      const result = await login(formData);
-      alert(result.accessToken);
+      const result = await loginRequest(formData);
     } catch (error: any) {
       alert(error.response?.data?.accessToken || 'Login error');
     }
