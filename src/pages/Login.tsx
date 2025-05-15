@@ -1,45 +1,36 @@
-import { Button, Input, Text } from "@chakra-ui/react";
-import Menu from "../page_elements/Menu";
-import Footer from "../page_elements/Footer";
-import "../App.css";
-import api from "../api"
-import { useState } from "react";
-import { useAuth } from "../auth/UseAuth";
-
-interface LoginRequest {
-  email: string;
-  password: string;
-}
-interface LoginResponse {
-  accessToken: string;
-}
+import { Button, Input, Text } from '@chakra-ui/react'
+import Menu from '../page_elements/Menu'
+import Footer from '../page_elements/Footer'
+import '../App.css'
+import api from '../api'
+import { useState } from 'react'
+import { useAuth } from '../auth/UseAuth'
+import { ILoginCredentials } from '../interfaces/login-credentials.interface'
+import { IUser } from '../interfaces/user.interface'
 
 const Login: React.FC = () => {
-const { user, login, logout } = useAuth();
-const loginRequest = async (data: LoginRequest) => {
-  try{
-    await api.post<LoginResponse>('/auth/login', data);
-    const response = await api.get('/auth/me')
-    login(response.data)
-  } catch(error) {
-    console.error('Ошибка логина', error)
-    logout();
-  }
-};
-  const [formData, setFormData] = useState<LoginRequest>({ email: '', password: '' });
+  const { login, logout } = useAuth()
+  const [credentials, setCredentials] = useState<ILoginCredentials>({
+    email: '',
+    password: '',
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const result = await loginRequest(formData);
-    } catch (error: any) {
-      alert(error.response?.data?.accessToken || 'Login error');
+      const response = await api.post<IUser>('/auth/login', credentials)
+      login(response.data)
+    } catch (error) {
+      logout()
+      // заменить на красивый вывод ошибки
+      console.error('Ошибка логина', error)
     }
-  };
+  }
+
   return (
     <>
       <Menu />
@@ -48,21 +39,41 @@ const loginRequest = async (data: LoginRequest) => {
           <h2 className="form-legend">Войти в аккаунт</h2>
           <div>
             <label className="form-control">Почта</label>
-            <Input id="email" name="email" placeholder="Почта" value={formData.email} onChange={handleChange} />
+            <Input
+              id="email"
+              name="email"
+              placeholder="Почта"
+              value={credentials.email}
+              onChange={handleChange}
+            />
           </div>
           <div>
             <label className="form-control">Пароль</label>
-            <Input id="password" name="password" placeholder="Пароль" type="password" value={formData.password} onChange={handleChange} />
+            <Input
+              id="password"
+              name="password"
+              placeholder="Пароль"
+              type="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
           </div>
-          <Button type="submit" colorPalette="orange" size="sm" fontWeight="bold" fontSize="12px" width="full">Войти</Button>
-          <Text className="login-link">
-            Нет аккаунта? Зарегистрируйтесь!
-          </Text>
+          <Button
+            type="submit"
+            colorPalette="orange"
+            size="sm"
+            fontWeight="bold"
+            fontSize="12px"
+            width="full"
+          >
+            Войти
+          </Button>
+          <Text className="login-link">Нет аккаунта? Зарегистрируйтесь!</Text>
         </form>
       </main>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

@@ -6,41 +6,41 @@ import {
   Select,
   Portal,
   createListCollection,
-} from "@chakra-ui/react";
-import Menu from "../page_elements/Menu";
-import Footer from "../page_elements/Footer";
-import "../App.css";
+} from '@chakra-ui/react'
+import Menu from '../page_elements/Menu'
+import Footer from '../page_elements/Footer'
+import '../App.css'
 
 const deliveryTimes = createListCollection({
   items: [
-    { label: "6:00 - 6:15", value: "6:00-6:15" },
-    { label: "6:15 - 6:30", value: "6:15-6:30" },
+    { label: '6:00 - 6:15', value: '6:00-6:15' },
+    { label: '6:15 - 6:30', value: '6:15-6:30' },
   ],
-});
+})
 const cancelOptions = createListCollection({
   items: [
-    { label: "Нет, не отменять", value: "no" },
-    { label: "Да, отменить", value: "yes" },
+    { label: 'Нет, не отменять', value: 'no' },
+    { label: 'Да, отменить', value: 'yes' },
   ],
-});
+})
 const drinkOptions = createListCollection({
   items: [
-    { label: "Молоко", value: "milk" },
-    { label: "Сок", value: "juice" },
+    { label: 'Молоко', value: 'milk' },
+    { label: 'Сок', value: 'juice' },
   ],
-});
+})
 const productOptions1 = createListCollection({
   items: [
-    { label: "Булочка с маком", value: "mak" },
-    { label: "Булочка с корицей", value: "koritsa" },
+    { label: 'Булочка с маком', value: 'mak' },
+    { label: 'Булочка с корицей', value: 'koritsa' },
   ],
-});
+})
 const productOptions2 = createListCollection({
   items: [
-    { label: "Булочка с капустой", value: "kapusta" },
-    { label: "Булочка с мясом", value: "myaso" },
+    { label: 'Булочка с капустой', value: 'kapusta' },
+    { label: 'Булочка с мясом', value: 'myaso' },
   ],
-});
+})
 
 const Subscribe_data_start: React.FC = () => {
   return (
@@ -119,7 +119,9 @@ const Subscribe_data_start: React.FC = () => {
               </div>
 
               <div>
-                <label className="form-control">Отменить на завтрашний день</label>
+                <label className="form-control">
+                  Отменить на завтрашний день
+                </label>
                 <Select.Root size="sm" collection={cancelOptions}>
                   <Select.HiddenSelect />
                   <Select.Control>
@@ -230,10 +232,19 @@ const Subscribe_data_start: React.FC = () => {
 
           <div className="subscribe-card_data">
             <h2 className="subscribe-title">
-              Подписка на месяц<br />(будни)
+              Подписка на месяц
+              <br />
+              (будни)
             </h2>
             <p className="subscribe-text">Не активна</p>
-            <Button type="submit" colorPalette="orange" size="sm" fontWeight="bold" fontSize="12px" width="full">
+            <Button
+              type="submit"
+              colorPalette="orange"
+              size="sm"
+              fontWeight="bold"
+              fontSize="12px"
+              width="full"
+            >
               Перейти к оплате
             </Button>
           </div>
@@ -241,7 +252,7 @@ const Subscribe_data_start: React.FC = () => {
       </main>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Subscribe_data_start;
+export default Subscribe_data_start

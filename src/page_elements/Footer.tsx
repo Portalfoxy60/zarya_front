@@ -1,5 +1,5 @@
-import logo from '../assets/logo_zarya.png';
-import '../App.css';
+import logo from '../assets/logo_zarya.png'
+import '../App.css'
 
 export default function Footer() {
   return (
@@ -9,5 +9,5 @@ export default function Footer() {
         <img src={logo} alt="LogoZarya" />
       </div>
     </footer>
-  );
+  )
 }

@@ -6,34 +6,33 @@ import {
   Portal,
   createListCollection,
   Textarea,
-} from "@chakra-ui/react";
-import { FiTrash2, FiEdit3 } from "react-icons/fi";
-import Menu from "../page_elements/Menu";
-import Footer from "../page_elements/Footer";
-import "../App.css";
-import TrashIcon from "../icons/TrashIcon";
+} from '@chakra-ui/react'
+import { FiTrash2, FiEdit3 } from 'react-icons/fi'
+import Menu from '../page_elements/Menu'
+import Footer from '../page_elements/Footer'
+import '../App.css'
+import TrashIcon from '../icons/TrashIcon'
 
 const categories = createListCollection({
   items: [
-    { label: "Сладкие булочки", value: "sweet" },
-    { label: "Напитки", value: "drinks" },
-    { label: "Булочки", value: "buns" },
+    { label: 'Сладкие булочки', value: 'sweet' },
+    { label: 'Напитки', value: 'drinks' },
+    { label: 'Булочки', value: 'buns' },
   ],
-});
+})
 const categoryOptions = createListCollection({
   items: [
-    { label: "Сладкие булочки", value: "sweet" },
-    { label: "Напитки", value: "drinks" },
-    { label: "Булочки", value: "buns" },
+    { label: 'Сладкие булочки', value: 'sweet' },
+    { label: 'Напитки', value: 'drinks' },
+    { label: 'Булочки', value: 'buns' },
   ],
-});
+})
 const Product_control: React.FC = () => {
   const products = [
-    { name: "Булочка с маком", category: "Булочки", price: "3.49€" },
-    { name: "Молоко", category: "Напитки", price: "0.89€" },
-    { name: "Булочка с корицей", category: "Сладкие булочки", price: "3.49€" },
-  ];
-
+    { name: 'Булочка с маком', category: 'Булочки', price: '3.49€' },
+    { name: 'Молоко', category: 'Напитки', price: '0.89€' },
+    { name: 'Булочка с корицей', category: 'Сладкие булочки', price: '3.49€' },
+  ]
 
   return (
     <>
@@ -53,29 +52,28 @@ const Product_control: React.FC = () => {
               <div className="form-group">
                 <label className="form-control">Категория</label>
                 <Select.Root size="sm" collection={categoryOptions}>
-                <Select.HiddenSelect />
-                <Select.Control>
+                  <Select.HiddenSelect />
+                  <Select.Control>
                     <Select.Trigger>
-                    <Select.ValueText placeholder="Сладкие булочки" />
+                      <Select.ValueText placeholder="Сладкие булочки" />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
-                    <Select.Indicator />
+                      <Select.Indicator />
                     </Select.IndicatorGroup>
-                </Select.Control>
-                <Portal>
+                  </Select.Control>
+                  <Portal>
                     <Select.Positioner>
-                    <Select.Content>
+                      <Select.Content>
                         {categoryOptions.items.map((item) => (
-                        <Select.Item key={item.value} item={item}>
+                          <Select.Item key={item.value} item={item}>
                             {item.label}
                             <Select.ItemIndicator />
-                        </Select.Item>
+                          </Select.Item>
                         ))}
-                    </Select.Content>
+                      </Select.Content>
                     </Select.Positioner>
-                </Portal>
+                  </Portal>
                 </Select.Root>
-
               </div>
             </div>
             {products.map((product, index) => (
@@ -84,16 +82,20 @@ const Product_control: React.FC = () => {
                   <b>{product.name}</b> {product.category}
                 </span>
                 <span>
-                    {product.price}                 
-                    <Button size="xs" variant="ghost" colorPalette="orange">
-                        <TrashIcon boxSize={4} />
-                    </Button> <FiEdit3 />
+                  {product.price}
+                  <Button size="xs" variant="ghost" colorPalette="orange">
+                    <TrashIcon boxSize={4} />
+                  </Button>{' '}
+                  <FiEdit3 />
                 </span>
               </div>
             ))}
           </div>
 
-          <form className="account-form" style={{ maxWidth: "400px", padding: "30px" }}>
+          <form
+            className="account-form"
+            style={{ maxWidth: '400px', padding: '30px' }}
+          >
             <fieldset className="form-section">
               <legend className="form-legend">Добавить товар</legend>
 
@@ -159,7 +161,7 @@ const Product_control: React.FC = () => {
       </main>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Product_control;
+export default Product_control
