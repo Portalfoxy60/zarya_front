@@ -15,18 +15,27 @@ import api from '../api'
 import { Category } from '../interfaces/category.interface'
 import { IProduct } from '../interfaces/product.interface'
 import { useEffect, useState } from 'react'
+import { IProductRequest } from '../interfaces/product-request.interface'
 
 const Product_control: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([])
   const [products, setProducts] = useState<IProduct[]>([])
-  const [formData, setFormData] = useState({
+  const [product, setProduct] = useState<IProductRequest>({
     name: '',
     description: '',
-    image: '',
+    image: null,
     price: 1,
     categoryId: 1,
   })
   const [editingId, setEditingId] = useState<number | null>(null)
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProduct((prev) => ({
+        ...prev,
+        image: e.target.files![0],
+      }))
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -45,23 +54,34 @@ const Product_control: React.FC = () => {
       console.error('Ошибка при удалении продукта:', error)
     }
   }
-  // const handleAddProduct = async () => {
-  //   if (!newProductName.trim()) return
-  //   try {
-  //     const res = await api.post('/products', formData)
-  //     // setProducts((prev) => [...prev, res.data])
-  //     // setNewProductName('')
-  //     // setIsAdding(false)
-  //   } catch (error) {
-  //     console.error('Ошибка при добавлении продукта:', error)
-  //   }
-  // }
+  const handleAddProduct = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const formData = new FormData()
+    Object.entries(product).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value instanceof File ? value : String(value))
+      }
+    })
+    try {
+      const res = await api.post('/products', formData, {headers:{"Content-Type":"multipart/form-data"}})
+      setProducts((prev) => [...prev, res.data])
+      setProduct({
+      name: '',
+      description: '',
+      image: null,
+      price: 1,
+      categoryId: 1,
+    })
+    } catch (error) {
+      console.error('Ошибка при добавлении продукта:', error)
+    }
+  }
   const handleEdit = (product: IProduct) => {
     setEditingId(product.id)
-    setFormData({
+    setProduct({
       name: product.name,
       description: product.description,
-      image: product.image  ?? '',
+      image: null,
       price: product.price,
       categoryId: product.category.id,
     })
@@ -70,15 +90,15 @@ const Product_control: React.FC = () => {
     if (!editingId) return
 
     try {
-      await api.patch(`/products/${editingId}`, formData)
+      await api.patch(`/products/${editingId}`, product)
 
       await fetchData()
 
       setEditingId(null)
-      setFormData({
+      setProduct({
         name: '',
         description: '',
-        image: '',
+        image: null,
         price: 1,
         categoryId: 1,
       })
@@ -87,10 +107,10 @@ const Product_control: React.FC = () => {
     }
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setProduct({ ...product, [e.target.name]: e.target.value })
   }
   const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setProduct({ ...product, [e.target.name]: e.target.value })
   }
   useEffect(() => {
     fetchCategories()
@@ -159,9 +179,10 @@ const Product_control: React.FC = () => {
               <div>
                 <label className="form-control">Название</label>
                 <Input
+                  name="name"
                   placeholder="Название товара"
                   size="sm"
-                  value={formData.name}
+                  value={product.name}
                   onChange={handleChange}
                 />
               </div>
@@ -171,17 +192,16 @@ const Product_control: React.FC = () => {
                 <Input
                   type="file"
                   size="sm"
-                  onChange={handleChange}
-                  value={formData.image}
+                  accept="image/*"
+                  onChange={handleFileChange}
                 />
               </div>
 
               <div>
                 <label className="form-control">Описание</label>
                 <Textarea
-                  placeholder="Описание товара"
-                  size="sm"
-                  value={formData.description}
+                  name="description"
+                  value={product.description}
                   onChange={handleChangeTextarea}
                 />
               </div>
@@ -189,10 +209,10 @@ const Product_control: React.FC = () => {
               <div>
                 <label className="form-control">Цена</label>
                 <Input
-                  placeholder="3.49"
-                  size="sm"
+                  name="price"
+                  type="number"
+                  value={product.price}
                   onChange={handleChange}
-                  value={formData.price}
                 />
               </div>
 
@@ -223,16 +243,29 @@ const Product_control: React.FC = () => {
                 </Select.Root>
               </div>
 
-              <Button
-                type="button"
-                colorPalette="orange"
-                width="full"
-                size="sm"
-                mt="4"
-                onClick={handleUpdateProduct}
-              >
-                {editingId ? 'Сохранить изменения' : 'Добавить товар'}
-              </Button>
+              {editingId ? (
+                <Button
+                  type="button"
+                  colorPalette="orange"
+                  width="full"
+                  size="sm"
+                  mt="4"
+                  onClick={handleUpdateProduct}
+                >
+                  Сохранить изменения
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  colorPalette="orange"
+                  width="full"
+                  size="sm"
+                  mt="4"
+                  onClick={handleAddProduct}
+                >
+                  Добавить товар
+                </Button>
+              )}
 
               <Button
                 variant="ghost"
