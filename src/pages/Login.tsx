@@ -7,9 +7,14 @@ import { useState } from 'react'
 import { useAuth } from '../auth/UseAuth'
 import { ILoginCredentials } from '../interfaces/login-credentials.interface'
 import { IUser } from '../interfaces/user.interface'
+import { useNavigate } from 'react-router-dom'
+import { routeMap } from '../routeMap'
+import { AxiosError } from 'axios'
 
 const Login: React.FC = () => {
   const { login, logout } = useAuth()
+  const navigate = useNavigate()
+
   const [credentials, setCredentials] = useState<ILoginCredentials>({
     email: '',
     password: '',
@@ -24,10 +29,15 @@ const Login: React.FC = () => {
     try {
       const response = await api.post<IUser>('/auth/login', credentials)
       login(response.data)
-    } catch (error) {
+      navigate(routeMap.products.path)
+    } catch (error: unknown) {
       logout()
-      // заменить на красивый вывод ошибки
-      console.error('Ошибка логина', error)
+
+      const axiosError = error as AxiosError<{ message: string }>
+      const message = axiosError.response?.data?.message || 'Ошибка входа'
+
+      console.error('Ошибка логина', message)
+      alert(message)
     }
   }
 

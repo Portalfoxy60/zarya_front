@@ -1,14 +1,22 @@
 import '../App.css'
-import { Button } from '@chakra-ui/react'
+import { Badge, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo_zarya.png'
-import { routeMap } from '../routeMap'
+import { Route, routeMap } from '../routeMap'
 import { useAuth } from '../auth/UseAuth'
-
-interface IProps {}
-
-const Menu: React.FC<IProps> = () => {
-  const { user, logout } = useAuth()
+import { ERoles } from '../enums/roles.enum'
+import { useCart } from '../pages/cart/useCart'
+const Menu: React.FC = () => {
+  const { user, isAuthenticated, logout } = useAuth()
+  let links : Route[] = []
+  if (user === null) {
+    links = [routeMap.home, routeMap.products]
+  } else if (user.role === ERoles.USER) {
+    links = [routeMap.home, routeMap.products, routeMap.cart, routeMap.subscribe, routeMap.changeInfo]
+  } else if ((user.role = ERoles.ADMIN)) {
+    links = [routeMap.home, routeMap.products, routeMap.cart, routeMap.subscribe, routeMap.changeInfo, routeMap.category_control, routeMap.product_control]
+  }
+  const {quantity} = useCart()
   return (
     <header className="menu">
       <a href="/" className="logo">
@@ -16,25 +24,24 @@ const Menu: React.FC<IProps> = () => {
       </a>
 
       <nav className="nav_menu">
-        <Link to={routeMap.home.path}>Главная</Link>
-        <Link to={routeMap.products.path}>Продукты</Link>
-        <Link to={routeMap.cart.path}>Корзина</Link>
-        <Link to={routeMap.subscribe.path}>Подписки</Link>
-        {/* <Link to={routeMap.changeInfo.path}>Изменить информацию</Link>
-        <Link to={routeMap.addresses.path}>добавить информацию</Link>
-        <Link to={routeMap.subscribe_data.path}>subscribe_data</Link>
-        <Link to={routeMap.subscribe_data_start.path}>subscribe_data_start</Link>
-        <Link to={routeMap.product_control.path}>product_control</Link> */}
-        <p>{user?.email}</p>
+        {links.map(link =>{
+          return (
+            <>
+            <Link to={link.path}>{link.displayName}</Link>
+            {link.path === '/cart' ? <Badge colorPalette="orange" size="md">{quantity}</Badge> : <></>}
+            </>
+          )
+        })}
+        
       </nav>
 
       <div className="auth-buttons">
-        <Button colorPalette="orange" size="md" variant="outline">
+          {!isAuthenticated ? (<><Button colorPalette="orange" size="md" variant="outline">
           <Link to={routeMap.login.path}>Войти</Link>
         </Button>
         <Button colorPalette="orange" size="md" variant="solid">
           <Link to={routeMap.register.path}>Зарегистрироваться</Link>
-        </Button>
+        </Button></>): (<><p>вы в аккаунте</p><Button colorPalette="orange" size="md" variant="outline" onClick={logout}>Выйти</Button></>)}
       </div>
     </header>
   )
