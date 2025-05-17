@@ -16,11 +16,17 @@ import Footer from '../../page_elements/Footer'
 import Menu from '../../page_elements/Menu'
 import { IProductWithQuantity } from '../../interfaces/productWithQuanity.interface'
 import { useCart } from './useCart'
-
+import { Link } from "react-router-dom";
 const borderStyle = '2px solid #C9BD9C'
 
 const Cart: React.FC = () => {
-  const { products, decrementQuantity, incrementQuantity, totalPrice,  removeProduct } = useCart()
+  const {
+    products,
+    decrementQuantity,
+    incrementQuantity,
+    totalPrice,
+    removeProduct,
+  } = useCart()
   return (
     <>
       <Menu />
@@ -68,7 +74,7 @@ const Cart: React.FC = () => {
             </TableHeader>
 
             <TableBody>
-              {products.map((value:IProductWithQuantity) => {
+              {products.map((value: IProductWithQuantity) => {
                 return (
                   <TableRow>
                     <TableCell style={{ border: borderStyle }}>
@@ -79,17 +85,30 @@ const Cart: React.FC = () => {
                     </TableCell>
                     <TableCell style={{ border: borderStyle }}>
                       <Flex className="quantity-controls">
-                        <Button size="xs" colorPalette="orange" onClick={() => decrementQuantity(value.product.id)}>
+                        <Button
+                          size="xs"
+                          colorPalette="orange"
+                          onClick={() => decrementQuantity(value.product.id)}
+                        >
                           -
                         </Button>
                         <Text>x{value.quantity}</Text>
-                        <Button size="xs" colorPalette="orange" onClick={() => incrementQuantity(value.product.id)}>
+                        <Button
+                          size="xs"
+                          colorPalette="orange"
+                          onClick={() => incrementQuantity(value.product.id)}
+                        >
                           +
                         </Button>
                       </Flex>
                     </TableCell>
                     <TableCell style={{ border: borderStyle }}>
-                      <Button size="xs" variant="ghost" colorPalette="orange" onClick={() => removeProduct(value.product.id)}>
+                      <Button
+                        size="xs"
+                        variant="ghost"
+                        colorPalette="orange"
+                        onClick={() => removeProduct(value.product.id)}
+                      >
                         <TrashIcon boxSize={4} />
                       </Button>
                     </TableCell>
@@ -104,7 +123,7 @@ const Cart: React.FC = () => {
             <strong>Итого: {totalPrice}€</strong>
           </Text>
           <Button colorPalette="orange" size="md">
-            Заказать все
+            <Link to="/addresses">Заказать все</Link>
           </Button>
         </Box>
       </main>

@@ -2,8 +2,40 @@ import { Input, Button, Stack, NumberInput } from '@chakra-ui/react'
 import Menu from '../page_elements/Menu'
 import Footer from '../page_elements/Footer'
 import '../App.css'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../auth/UseAuth'
+import api from '../api'
+// const { user } = useAuth()
+
+// const [formData, setFormData] = useState({
+//   firstname: '',
+//   lastname: '',
+//   email: '',
+//   phone: '',
+//   password: '',
+//   confirmPassword: '',
+//   street: '',
+//   floor: '',
+//   building: '',
+//   flat: '',
+// })
 
 const ChangeInfo: React.FC = () => {
+  // const { user } = useAuth()
+
+  // const [formData, setFormData] = useState({
+  //   firstname: '',
+  //   lastname: '',
+  //   email: '',
+  //   phone: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   street: '',
+  //   floor: '',
+  //   building: '',
+  //   flat: '',
+  // })
+
   return (
     <>
       <Menu />

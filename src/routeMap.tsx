@@ -72,10 +72,9 @@ export const routeMap: Record<string, Route> = {
     element: <Subscribe_data />,
     role: ERoles.USER,
     displayName: 'Данные попдиски',
-
   },
   subscribe_data_start: {
-    path: '/subscribe_data_start',
+    path: '/subscribe_data_start/:type',
     element: <Subscribe_data_start />,
     role: ERoles.USER,
   },

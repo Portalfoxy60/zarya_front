@@ -10,6 +10,8 @@ import {
 import Menu from '../page_elements/Menu'
 import Footer from '../page_elements/Footer'
 import '../App.css'
+import { useParams } from 'react-router-dom'
+
 const deliveryTimes = createListCollection({
   items: [
     { label: '6:00 - 6:15', value: '6:00-6:15' },
@@ -42,6 +44,8 @@ const productOptions2 = createListCollection({
 })
 
 const Subscribe_data: React.FC = () => {
+  const { type } = useParams<{ type: string }>()
+
   return (
     <>
       <Menu />
@@ -235,10 +239,12 @@ const Subscribe_data: React.FC = () => {
 
           <div className="subscribe-card_data">
             <h2 className="subscribe-title">
-              Подписка на месяц
-              <br />
-              (будни)
+              Подписка: {type === 'week' && 'на неделю'}
+              {type === 'weekday' && 'на месяц (будни)'}
+              {type === 'weekend' && 'на месяц (выходные)'}
+              {type === 'everyday' && 'на месяц (каждый день)'}
             </h2>
+
             <p className="subscribe-text">Активна</p>
             <Button
               type="submit"

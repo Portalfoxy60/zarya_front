@@ -64,7 +64,7 @@ const Addresses: React.FC = () => {
           height="40px"
           fontSize="11px"
         >
-          Изменить
+          Заказать
         </Button>
       </main>
       <Footer />

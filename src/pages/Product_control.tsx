@@ -46,6 +46,7 @@ const Product_control: React.FC = () => {
       console.error('Ошибка загрузки данных:', error)
     }
   }
+
   const handleDelete = async (id: number) => {
     try {
       await api.delete(`/products/${id}`)
@@ -54,6 +55,7 @@ const Product_control: React.FC = () => {
       console.error('Ошибка при удалении продукта:', error)
     }
   }
+
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault()
     const formData = new FormData()
@@ -63,19 +65,22 @@ const Product_control: React.FC = () => {
       }
     })
     try {
-      const res = await api.post('/products', formData, {headers:{"Content-Type":"multipart/form-data"}})
+      const res = await api.post('/products', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       setProducts((prev) => [...prev, res.data])
       setProduct({
-      name: '',
-      description: '',
-      image: null,
-      price: 1,
-      categoryId: 1,
-    })
+        name: '',
+        description: '',
+        image: null,
+        price: 1,
+        categoryId: 1,
+      })
     } catch (error) {
       console.error('Ошибка при добавлении продукта:', error)
     }
   }
+
   const handleEdit = (product: IProduct) => {
     setEditingId(product.id)
     setProduct({
@@ -86,6 +91,7 @@ const Product_control: React.FC = () => {
       categoryId: product.category.id,
     })
   }
+
   const handleUpdateProduct = async () => {
     if (!editingId) return
 
@@ -106,12 +112,19 @@ const Product_control: React.FC = () => {
       console.error('Ошибка при обновлении продукта:', error)
     }
   }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setProduct({ ...product, categoryId: Number(e.target.value) })
+    console.log(e)
+  }
+
   const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setProduct({ ...product, [e.target.name]: e.target.value })
   }
+
   useEffect(() => {
     fetchCategories()
     fetchData()
@@ -126,10 +139,11 @@ const Product_control: React.FC = () => {
       console.error('Error fetching categories:', error)
     }
   }
+
   const categoryCollection = createListCollection({
     items: categories.map((item) => ({
       label: item.name,
-      value: item.id,
+      value: item.id.toString(),
     })),
   })
 
@@ -218,7 +232,20 @@ const Product_control: React.FC = () => {
 
               <div>
                 <label className="form-control">Категория</label>
-                <Select.Root size="sm" collection={categoryCollection}>
+                <Select.Root 
+                  size="sm"
+                  collection={categoryCollection}
+                  value={
+                    product.categoryId ? product.categoryId.toString() : ''
+                  }
+                  onValueChange={(value) => {
+                    const categoryId = parseInt(value, 10)
+                    setProduct((prev) => ({
+                      ...prev,
+                      categoryId,
+                    }))
+                  }}
+                >
                   <Select.HiddenSelect />
                   <Select.Control>
                     <Select.Trigger>

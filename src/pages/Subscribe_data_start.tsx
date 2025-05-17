@@ -10,6 +10,9 @@ import {
 import Menu from '../page_elements/Menu'
 import Footer from '../page_elements/Footer'
 import '../App.css'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import api from '../api'
 
 const deliveryTimes = createListCollection({
   items: [
@@ -43,6 +46,26 @@ const productOptions2 = createListCollection({
 })
 
 const Subscribe_data_start: React.FC = () => {
+  const { type } = useParams<{ type: string }>()
+  const [subscription, setSubscription] = useState<{
+    title: string
+    description: string
+    price: number
+  } | null>(null)
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await api.get('/subscribes/details')
+        setSubscription(res.data[type!])
+      } catch (err) {
+        console.error('Ошибка при загрузке подписки:', err)
+      }
+    }
+
+    if (type) fetchDetails()
+  }, [type])
+
   return (
     <>
       <Menu />
@@ -119,9 +142,7 @@ const Subscribe_data_start: React.FC = () => {
               </div>
 
               <div>
-                <label className="form-control">
-                  Отменить на завтрашний день
-                </label>
+                <label className="form-control">Отменить на завтра</label>
                 <Select.Root size="sm" collection={cancelOptions}>
                   <Select.HiddenSelect />
                   <Select.Control>
@@ -175,7 +196,7 @@ const Subscribe_data_start: React.FC = () => {
               </div>
 
               <div>
-                <label className="form-control">Выбрать продукт(1)</label>
+                <label className="form-control">Выбрать продукт (1)</label>
                 <Select.Root size="sm" collection={productOptions1}>
                   <Select.HiddenSelect />
                   <Select.Control>
@@ -202,7 +223,7 @@ const Subscribe_data_start: React.FC = () => {
               </div>
 
               <div>
-                <label className="form-control">Выбрать продукт(2)</label>
+                <label className="form-control">Выбрать продукт (2)</label>
                 <Select.Root size="sm" collection={productOptions2}>
                   <Select.HiddenSelect />
                   <Select.Control>
@@ -231,12 +252,16 @@ const Subscribe_data_start: React.FC = () => {
           </form>
 
           <div className="subscribe-card_data">
-            <h2 className="subscribe-title">
-              Подписка на месяц
-              <br />
-              (будни)
-            </h2>
-            <p className="subscribe-text">Не активна</p>
+            {subscription ? (
+              <>
+                <h2 className="subscribe-title">{subscription.title}</h2>
+                <p className="subscribe-text">{subscription.description}</p>
+                <p className="subscribe-price">Цена: {subscription.price}€</p>
+              </>
+            ) : (
+              <p>Загрузка подписки...</p>
+            )}
+
             <Button
               type="submit"
               colorPalette="orange"

@@ -53,7 +53,8 @@ const Products: React.FC = () => {
         <div className="product-grid">
           {filtered.map((product) => (
             <div className="product-card" key={product.id}>
-              <img src={bulka} alt={product.name} />
+              <img src={`http://localhost:3000/static/${product.image}`} alt={product.name} />
+              {console.log(product)}
               <h3 className="item-title">{product.name}</h3>
               <p className="text">{product.description}</p>
               <strong>{Number(product.price).toFixed(2)}€</strong>
