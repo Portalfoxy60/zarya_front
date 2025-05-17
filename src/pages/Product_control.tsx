@@ -118,7 +118,7 @@ const Product_control: React.FC = () => {
   }
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setProduct({ ...product, categoryId: Number(e.target.value) })
-    console.log(e)
+    console.log(product)
   }
 
   const handleChangeTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -235,16 +235,7 @@ const Product_control: React.FC = () => {
                 <Select.Root 
                   size="sm"
                   collection={categoryCollection}
-                  value={
-                    product.categoryId ? product.categoryId.toString() : ''
-                  }
-                  onValueChange={(value) => {
-                    const categoryId = parseInt(value, 10)
-                    setProduct((prev) => ({
-                      ...prev,
-                      categoryId,
-                    }))
-                  }}
+                  onChange={handleChangeSelect}
                 >
                   <Select.HiddenSelect />
                   <Select.Control>
